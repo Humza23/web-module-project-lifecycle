@@ -52,7 +52,7 @@ class App extends React.Component{
         gitUsers: responses[0].data.name,
         followers: [
           responses[1].data.map(item => (
-            <h3>{item.login}</h3>
+            <p key={item.id}>{item.login}</p>
           ))
         ]
       })
@@ -76,9 +76,9 @@ class App extends React.Component{
         <h1>
           {this.state.gitUsers}
         </h1>
-        <h3>
+        <h2>
         Followers: {this.state.followers}
-        </h3>
+        </h2>
       </div>
 
       </div>
