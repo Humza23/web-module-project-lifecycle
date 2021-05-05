@@ -14,14 +14,18 @@ class App extends React.Component{
       axios.get('https://api.github.com/users/Humza23'),
       axios.get('https://api.github.com/users/Humza23/followers')
     ]).then(responses => {
-      console.log(responses[0].data.name);
-      console.log(responses[1].data[0]);
+      // console.log(responses[0].data.name);
+      console.log(responses[1].data.map(item => (
+        item.login
+      )));
         this.setState({
-            gitUsers: [
+            gitUsers: 
               responses[0].data.name
-            ],
+            ,
             followers: [
-              responses[1].data[0]
+              responses[1].data.map(item => (
+                item.login
+              ))
             ]
         })
     })
@@ -39,11 +43,18 @@ class App extends React.Component{
 
   submitHandler = (e) => {
     e.preventDefault()
-    axios.get(`https://api.github.com/users/${this.state.search}`)
-    .then(res=>{
-      console.log('User:', res.data);
+    Promise.all([
+      axios.get(`https://api.github.com/users/${this.state.search}`),
+      axios.get(`https://api.github.com/users/${this.state.search}/followers`)
+    ]).then(responses => {
+      // console.log('User:', res.data);
       this.setState({
-        gitUsers: res.data
+        gitUsers: responses[0].data.name,
+        followers: [
+          responses[1].data.map(item => (
+            <h3>{item.login}</h3>
+          ))
+        ]
       })
     })
     .catch(err=>{
@@ -65,6 +76,9 @@ class App extends React.Component{
         <h1>
           {this.state.gitUsers}
         </h1>
+        <h3>
+        Followers: {this.state.followers}
+        </h3>
       </div>
 
 
