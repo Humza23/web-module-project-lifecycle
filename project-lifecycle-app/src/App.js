@@ -14,7 +14,7 @@ class App extends React.Component{
       axios.get('https://api.github.com/users/Humza23'),
       axios.get('https://api.github.com/users/Humza23/followers')
     ]).then(responses => {
-      // console.log(responses[0].data.name);
+      console.log(responses[0].data.name);
       console.log(responses[1].data.map(item => (
         item.login
       )));
@@ -80,7 +80,6 @@ class App extends React.Component{
         Followers: {this.state.followers}
         </h3>
       </div>
-
 
       </div>
     )
